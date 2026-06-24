@@ -259,9 +259,6 @@ Run tests with the Hack Hardware Simulator.
 
 This implementation is based on the Nand2Tetris course, a comprehensive introduction to computer systems from logic gates to operating systems.
 
-## License
-
-This project is for educational purposes.
 
 ---
 
