@@ -1,0 +1,84 @@
+class Main {
+    function void main() {
+        var Conv c;
+        var Array input;
+        var Array filter;
+        var int i;
+
+        // 5x5 input, stride = 1
+        // Edge-detection (Laplacian) kernel:
+        //   0  -1   0
+        //  -1   4  -1
+        //   0  -1   0
+
+        do Output.printString("--- 5x5 Convolution (stride=1) ---");
+        do Output.println();
+
+        let filter = Array.new(9);
+        let filter[0] =  0;  let filter[1] = -1;  let filter[2] =  0;
+        let filter[3] = -1;  let filter[4] =  4;  let filter[5] = -1;
+        let filter[6] =  0;  let filter[7] = -1;  let filter[8] =  0;
+
+        // 5x5 input matrix 
+        //  1  2  3  4  5
+        //  6  7  8  9 10
+        // 11 12 13 14 15
+        // 16 17 18 19 20
+        // 21 22 23 24 25
+
+        let input = Array.new(25);
+        let i = 0;
+        while (i < 25) {
+            let input[i] = i + 1;
+            let i = i + 1;
+        }
+
+        let c = Conv.new(5);
+        do c.initFilter(filter);
+        do c.getArrayInput(input, 5);
+        do c.conv2d();
+        do c.printOutput();
+        do c.dispose();
+        do input.dispose();
+        do filter.dispose();
+
+        // extra credit 
+
+        do Output.printString("--- 9x9 Convolution (stride=1) ---");
+        do Output.println();
+
+        let filter = Array.new(9);
+        let filter[0] =  0;  let filter[1] = -1;  let filter[2] =  0;
+        let filter[3] = -1;  let filter[4] =  4;  let filter[5] = -1;
+        let filter[6] =  0;  let filter[7] = -1;  let filter[8] =  0;
+
+        // 9x9 input matrix
+        //  1  2  3  4  5  6  7  8  9 
+        // 10 11 12 13 14 15 16 17 18 
+        // 19 20 21 22 23 24 25 26 27 
+        // 28 29 30 31 32 33 34 35 36 
+        // 37 38 39 40 41 42 43 44 45 
+        // 46 47 48 49 50 51 52 53 54 
+        // 55 56 57 58 59 60 61 62 63 
+        // 64 65 66 67 68 69 70 71 72 
+        // 73 74 75 76 77 78 79 80 81 
+
+        let input = Array.new(81);
+        let i = 0;
+        while (i < 81) {
+            let input[i] = i + 1;
+            let i = i + 1;
+        }
+
+        let c = Conv.new(9);
+        do c.initFilter(filter);
+        do c.getArrayInput(input, 9);
+        do c.conv2d();
+        do c.printOutput();
+        do c.dispose();
+        do input.dispose();
+        do filter.dispose();
+
+        return;
+    }
+}

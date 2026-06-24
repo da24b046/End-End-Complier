@@ -1,0 +1,101 @@
+// Approach A — MATMUL(W_ptr, X_ptr, W_rows, W_cols, X_cols, Y_ptr)
+// local 0 = i
+// local 1 = j
+// local 2 = p
+// local 3 = acc
+
+function MATMUL 4
+
+push constant 0
+pop local 0            // i = 0
+
+label OUTER_LOOP
+push local 0
+push argument 2
+sub
+if-goto MATMUL_DONE
+
+push constant 0
+pop local 1            // j = 0
+
+label MIDDLE_LOOP
+push local 1
+push argument 4
+sub
+if-goto NEXT_ROW
+
+push constant 0
+pop local 3            // acc = 0
+push constant 0
+pop local 2            // p = 0
+
+label INNER_LOOP
+push local 2
+push argument 3
+sub
+if-goto STORE_RESULT
+
+push argument 0
+push local 0
+push argument 3
+call multiply 2
+add
+push local 2
+add
+pop pointer 0
+push this 0
+
+push argument 1
+push local 2
+push argument 4
+call multiply 2
+add
+push local 1
+add
+pop pointer 1
+push that 0
+
+call multiply 2
+push local 3
+add
+pop local 3
+
+push local 2
+push constant 1
+add
+pop local 2
+goto INNER_LOOP
+
+
+label STORE_RESULT
+
+push argument 5
+push local 0
+push argument 4
+call multiply 2
+add
+push local 1
+add
+pop pointer 0
+
+
+push local 3
+pop this 0
+
+push local 1
+push constant 1
+add
+pop local 1
+goto MIDDLE_LOOP
+
+
+label NEXT_ROW
+push local 0
+push constant 1
+add
+pop local 0
+goto OUTER_LOOP
+
+label MATMUL_DONE
+push argument 5
+return

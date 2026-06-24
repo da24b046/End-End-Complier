@@ -1,0 +1,28 @@
+// Computes sum = n + (n-1) + ... + 1
+// Assume argument 0 is 'n' and local 0 is 'sum'
+
+function Sum.compute 1
+push constant 0
+pop local 0         // sum = 0
+
+label LOOP
+push argument 0
+push constant 0
+eq
+if-goto END         // if n == 0, jump to END
+
+push local 0
+push argument 0
+add
+pop local 0         // sum = sum + n
+
+push argument 0
+push constant 1
+sub
+pop argument 0      // n = n - 1
+
+goto LOOP
+
+label END
+push local 0
+return              // returns the final sum

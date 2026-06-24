@@ -1,0 +1,118 @@
+// ROWXCOL(row_ptr, col_ptr, length) → integer dot product
+
+// local 0    = k (index)
+// local 1    = accumulator
+
+function ROWXCOL 2
+    push constant 0
+    pop local 0            // k = 0
+    push constant 0
+    pop local 1            // acc = 0
+
+label DOT_LOOP
+    push local 0
+    push argument 2        // length
+    sub
+    if-goto DOT_DONE       // if k >= length: done
+
+    push argument 0
+    push local 0
+    add
+    pop pointer 0
+    push this 0            // push W[i][k]
+
+    push argument 1
+    push local 0
+    push argument 3        // X_cols (stride)
+    call multiply 2
+    add
+    pop pointer 1
+    push that 0            // push X[k][j]
+
+    call multiply 2        // W[i][k] * X[k][j]
+    push local 1
+    add
+    pop local 1            // acc += product
+
+    push local 0
+    push constant 1
+    add
+    pop local 0            // k++
+    goto DOT_LOOP
+
+label DOT_DONE
+    push local 1
+    return                 // return dot product
+
+// MAC_CALLER(W_ptr, X_ptr, B_ptr, Y_ptr, m, k, n)
+function MAC_CALLER 3
+    // local 0 = i, local 1 = j, local 2 = temp
+
+    push constant 0
+    pop local 0            // i = 0
+
+label MAC_OUTER
+
+    push local 0
+    push argument 4        // m
+    sub
+    if-goto MAC_DONE
+
+    push constant 0
+    pop local 1            // j = 0
+
+label MAC_INNER
+
+    push local 1
+    push argument 6        // n
+    sub
+    if-goto MAC_NEXT_ROW
+
+    push argument 0        // W_ptr
+    push local 0           // i
+    push argument 5        // k
+    call multiply 2
+    add                    // row_ptr = W_ptr + i*k
+
+    push argument 1        // X_ptr
+    push local 1           // j
+    add                    // col_ptr = X_ptr + j  (top of col j, stride=n)
+
+    push argument 5        // length = k
+    push argument 6       
+    call ROWXCOL 4
+
+    push argument 2        // B_ptr
+    push local 0           // i
+    add
+    pop pointer 1
+    push that 0            // B[i]
+    add                    // ROWXCOL result + B[i]
+
+    push argument 3        // Y_ptr
+    push local 0
+    push argument 6
+    call multiply 2
+    add
+    push local 1
+    add
+    pop pointer 0
+    pop this 0             // Y[i][j] = dot + B[i]
+
+    push local 1
+    push constant 1
+    add
+    pop local 1
+    goto MAC_INNER
+
+label MAC_NEXT_ROW
+
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto MAC_OUTER
+
+label MAC_DONE
+    push constant 0
+    return

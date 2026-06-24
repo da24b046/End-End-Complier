@@ -1,0 +1,61 @@
+// ADD_BIAS(Y_ptr, B_ptr, W_rows, X_cols)
+
+function ADD_BIAS 3
+push constant 0
+pop local 0            // i = 0 
+
+label BIAS_OUTER
+push local 0
+push argument 2        // W_rows
+sub
+if-goto BIAS_DONE
+
+push constant 0
+pop local 1            // j = 0
+
+label BIAS_INNER
+push local 1
+push argument 3        // X_cols
+sub
+if-goto BIAS_NEXT_ROW
+
+push argument 0        // Y_ptr
+push local 0
+push argument 3
+call multiply 2        // i * X_cols
+add
+push local 1
+add
+pop pointer 0         
+
+push argument 1        // B_ptr
+push local 0
+push argument 3
+call multiply 2        // i * X_cols
+add
+push local 1
+add
+pop pointer 1         
+
+push this 0
+push that 0
+add
+pop this 0
+
+push local 1
+push constant 1
+add
+pop local 1
+goto BIAS_INNER
+
+label BIAS_NEXT_ROW
+
+push local 0
+push constant 1
+add
+pop local 0
+goto BIAS_OUTER
+
+label BIAS_DONE
+push constant 0
+return

@@ -1,0 +1,123 @@
+class Conv {
+    static Array ArrayFilter;   // 3x3 filter, flattened to length 9
+    static int   stride;        // initialised in constructor (1 or 2)
+    field Array ArrayInput;     // input matrix, flattened 
+    field Array ArrayOutput;    // output matrix, flattened 
+    field int   ArraySize;      // side length N of the input (NxN)
+    // Filter is always of size 3.
+
+    /** Constructor : initialise stride and allocate output . */
+    constructor Conv new(int N) {
+        let ArraySize = N;
+        let stride = 1;                        // default stride = 1
+        let ArrayInput  = Array.new(N * N);
+        let ArrayFilter = Array.new(9);
+        let ArrayOutput = Array.new(N * N);    
+        return this;
+    }
+
+    /** Initialise the 3x3 filter with given values . */
+    method void initFilter(Array values) {
+        var int i;
+        let i = 0;
+        while (i < 9) {
+            let ArrayFilter[i] = values[i];
+            let i = i + 1;
+        }
+        return;
+    }
+
+    /** Read input matrix entries from the caller . */
+    method void getArrayInput(Array input, int size) {
+        var int i;
+        let i = 0;
+        while (i < (size * size)) {
+            let ArrayInput[i] = input[i];
+            let i = i + 1;
+        }
+        return;
+    }
+    
+    /** Compute output dimension using the conv formula . */
+    method int calcOutputDim() {
+        var int O;
+        let O = ((ArraySize - 3) / stride) + 1;
+        return O;
+    }
+
+    /** Run the full convolution and store result in ArrayOutput . */
+    method void conv2d() {
+        var int O;          
+        var int oi, oj;     
+        var int fi, fj;   
+        var int ii, ij;     
+        var int sum;        
+        var int k;          
+        var int inputIdx;
+
+        if (ArraySize < 3) {
+            do Memory.poke(24576, -1);   // error signal in RAM[24576]
+            return;
+        }
+
+        let O  = calcOutputDim();
+        let oi = 0;
+        let k  = 0;
+
+        while (oi < O) {
+            let oj = 0;
+            while (oj < O) {
+                let sum = 0;
+                let fi  = 0;
+                while (fi < 3) {
+                    let fj = 0;
+                    while (fj < 3) {
+                        let ii = (oi * stride) + fi;
+                        let ij = (oj * stride) + fj;
+                        let inputIdx = (ii * ArraySize) + ij;
+                        let sum = sum + (ArrayInput[inputIdx] * ArrayFilter[(fi * 3) + fj]);
+                        let fj = fj + 1;
+                    }
+                    let fi = fi + 1;
+                }
+                let ArrayOutput[k] = sum;
+                let k  = k + 1;
+                let oj = oj + 1;
+            }
+            let oi = oi + 1;
+        }
+        return;
+    }
+   
+    /** Print the output matrix to screen . */
+    method void printOutput() {
+        var int O;
+        var int i, j;
+
+        let O = calcOutputDim();
+        let i = 0;
+
+        while (i < O) {
+            let j = 0;
+            while (j < O) {
+                do Output.printInt(ArrayOutput[(i * O) + j]);
+                if (j < (O - 1)) {
+                    do Output.printChar(32);   // space
+                }
+                let j = j + 1;
+            }
+            do Output.println();
+            let i = i + 1;
+        }
+        return;
+    }
+
+    /** Free allocated memory . */
+    method void dispose() {
+        do ArrayInput.dispose();
+        do ArrayOutput.dispose();
+        do ArrayFilter.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+}

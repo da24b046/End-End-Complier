@@ -1,0 +1,49 @@
+CHIP CSA32 {
+IN
+alow[16], ahigh[16],
+blow[16], bhigh[16],
+clow[16], chigh[16];
+
+OUT
+sumlow[16], sumhigh[16],
+carrylow[16], carryhigh[16];
+
+PARTS:
+
+// ---- LOW 16 BITS ----
+FullAdder(a=alow[0], b=blow[0], c=clow[0], sum=sumlow[0], carry=carrylow[0]);
+FullAdder(a=alow[1], b=blow[1], c=clow[1], sum=sumlow[1], carry=carrylow[1]);
+FullAdder(a=alow[2], b=blow[2], c=clow[2], sum=sumlow[2], carry=carrylow[2]);
+FullAdder(a=alow[3], b=blow[3], c=clow[3], sum=sumlow[3], carry=carrylow[3]);
+FullAdder(a=alow[4], b=blow[4], c=clow[4], sum=sumlow[4], carry=carrylow[4]);
+FullAdder(a=alow[5], b=blow[5], c=clow[5], sum=sumlow[5], carry=carrylow[5]);
+FullAdder(a=alow[6], b=blow[6], c=clow[6], sum=sumlow[6], carry=carrylow[6]);
+FullAdder(a=alow[7], b=blow[7], c=clow[7], sum=sumlow[7], carry=carrylow[7]);
+FullAdder(a=alow[8], b=blow[8], c=clow[8], sum=sumlow[8], carry=carrylow[8]);
+FullAdder(a=alow[9], b=blow[9], c=clow[9], sum=sumlow[9], carry=carrylow[9]);
+FullAdder(a=alow[10], b=blow[10], c=clow[10], sum=sumlow[10], carry=carrylow[10]);
+FullAdder(a=alow[11], b=blow[11], c=clow[11], sum=sumlow[11], carry=carrylow[11]);
+FullAdder(a=alow[12], b=blow[12], c=clow[12], sum=sumlow[12], carry=carrylow[12]);
+FullAdder(a=alow[13], b=blow[13], c=clow[13], sum=sumlow[13], carry=carrylow[13]);
+FullAdder(a=alow[14], b=blow[14], c=clow[14], sum=sumlow[14], carry=carrylow[14]);
+FullAdder(a=alow[15], b=blow[15], c=clow[15], sum=sumlow[15], carry=carrylow[15]);
+
+// ---- HIGH 16 BITS ----
+FullAdder(a=ahigh[0], b=bhigh[0], c=chigh[0], sum=sumhigh[0], carry=carryhigh[0]);
+FullAdder(a=ahigh[1], b=bhigh[1], c=chigh[1], sum=sumhigh[1], carry=carryhigh[1]);
+FullAdder(a=ahigh[2], b=bhigh[2], c=chigh[2], sum=sumhigh[2], carry=carryhigh[2]);
+FullAdder(a=ahigh[3], b=bhigh[3], c=chigh[3], sum=sumhigh[3], carry=carryhigh[3]);
+FullAdder(a=ahigh[4], b=bhigh[4], c=chigh[4], sum=sumhigh[4], carry=carryhigh[4]);
+FullAdder(a=ahigh[5], b=bhigh[5], c=chigh[5], sum=sumhigh[5], carry=carryhigh[5]);
+FullAdder(a=ahigh[6], b=bhigh[6], c=chigh[6], sum=sumhigh[6], carry=carryhigh[6]);
+FullAdder(a=ahigh[7], b=bhigh[7], c=chigh[7], sum=sumhigh[7], carry=carryhigh[7]);
+FullAdder(a=ahigh[8], b=bhigh[8], c=chigh[8], sum=sumhigh[8], carry=carryhigh[8]);
+FullAdder(a=ahigh[9], b=bhigh[9], c=chigh[9], sum=sumhigh[9], carry=carryhigh[9]);
+FullAdder(a=ahigh[10], b=bhigh[10], c=chigh[10], sum=sumhigh[10], carry=carryhigh[10]);
+FullAdder(a=ahigh[11], b=bhigh[11], c=chigh[11], sum=sumhigh[11], carry=carryhigh[11]);
+FullAdder(a=ahigh[12], b=bhigh[12], c=chigh[12], sum=sumhigh[12], carry=carryhigh[12]);
+FullAdder(a=ahigh[13], b=bhigh[13], c=chigh[13], sum=sumhigh[13], carry=carryhigh[13]);
+FullAdder(a=ahigh[14], b=bhigh[14], c=chigh[14], sum=sumhigh[14], carry=carryhigh[14]);
+FullAdder(a=ahigh[15], b=bhigh[15], c=chigh[15], sum=sumhigh[15], carry=carryhigh[15]);
+
+}

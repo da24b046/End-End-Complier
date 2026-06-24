@@ -1,0 +1,9 @@
+CHIP Counter {
+    OUT out;
+
+    PARTS:
+
+    Not(in=a, out=next);
+    Bit(in=next, load=true, out=a);
+    Or(a=a, b=false, out=out);
+}

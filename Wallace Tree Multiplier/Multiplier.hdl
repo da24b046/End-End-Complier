@@ -1,0 +1,161 @@
+CHIP Multiplier {
+IN a[16], b[16];
+OUT outlow[16], outhigh[16];
+
+PARTS:
+
+
+PP32(a=a, b=b,
+p0low=p0low, p0high=p0high,
+p1low=p1low, p1high=p1high,
+p2low=p2low, p2high=p2high,
+p3low=p3low, p3high=p3high,
+p4low=p4low, p4high=p4high,
+p5low=p5low, p5high=p5high,
+p6low=p6low, p6high=p6high,
+p7low=p7low, p7high=p7high,
+p8low=p8low, p8high=p8high,
+p9low=p9low, p9high=p9high,
+p10low=p10low, p10high=p10high,
+p11low=p11low, p11high=p11high,
+p12low=p12low, p12high=p12high,
+p13low=p13low, p13high=p13high,
+p14low=p14low, p14high=p14high,
+p15low=p15low, p15high=p15high);
+
+
+
+CSA32(
+alow=p0low,ahigh=p0high,
+blow=p1low,bhigh=p1high,
+clow=p2low,chigh=p2high,
+sumlow=s1low,sumhigh=s1high,
+carrylow=c1low,carryhigh=c1high);
+
+CSA32(
+alow=p3low,ahigh=p3high,
+blow=p4low,bhigh=p4high,
+clow=p5low,chigh=p5high,
+sumlow=s2low,sumhigh=s2high,
+carrylow=c2low,carryhigh=c2high);
+
+CSA32(
+alow=p6low,ahigh=p6high,
+blow=p7low,bhigh=p7high,
+clow=p8low,chigh=p8high,
+sumlow=s3low,sumhigh=s3high,
+carrylow=c3low,carryhigh=c3high);
+
+CSA32(
+alow=p9low,ahigh=p9high,
+blow=p10low,bhigh=p10high,
+clow=p11low,chigh=p11high,
+sumlow=s4low,sumhigh=s4high,
+carrylow=c4low,carryhigh=c4high);
+
+CSA32(
+alow=p12low,ahigh=p12high,
+blow=p13low,bhigh=p13high,
+clow=p14low,chigh=p14high,
+sumlow=s5low,sumhigh=s5high,
+carrylow=c5low,carryhigh=c5high);
+
+
+CSA32(
+alow=s1low,ahigh=s1high,
+blow=s2low,bhigh=s2high,
+clow=s3low,chigh=s3high,
+sumlow=s6low,sumhigh=s6high,
+carrylow=c6low,carryhigh=c6high);
+
+CSA32(
+alow=s4low,ahigh=s4high,
+blow=s5low,bhigh=s5high,
+clow=p15low,chigh=p15high,
+sumlow=s7low,sumhigh=s7high,
+carrylow=c7low,carryhigh=c7high);
+
+
+ShiftLeft32(inlow=c1low,inhigh=c1high,outlow=sc1low,outhigh=sc1high);
+ShiftLeft32(inlow=c2low,inhigh=c2high,outlow=sc2low,outhigh=sc2high);
+ShiftLeft32(inlow=c3low,inhigh=c3high,outlow=sc3low,outhigh=sc3high);
+ShiftLeft32(inlow=c4low,inhigh=c4high,outlow=sc4low,outhigh=sc4high);
+ShiftLeft32(inlow=c5low,inhigh=c5high,outlow=sc5low,outhigh=sc5high);
+
+
+CSA32(
+alow=sc1low,ahigh=sc1high,
+blow=sc2low,bhigh=sc2high,
+clow=sc3low,chigh=sc3high,
+sumlow=s8low,sumhigh=s8high,
+carrylow=c8low,carryhigh=c8high);
+
+CSA32(
+alow=s6low,ahigh=s6high,
+blow=s7low,bhigh=s7high,
+clow=s8low,chigh=s8high,
+sumlow=s9low,sumhigh=s9high,
+carrylow=c9low,carryhigh=c9high);
+
+
+ShiftLeft32(inlow=c6low,inhigh=c6high,outlow=sc6low,outhigh=sc6high);
+ShiftLeft32(inlow=c7low,inhigh=c7high,outlow=sc7low,outhigh=sc7high);
+ShiftLeft32(inlow=c8low,inhigh=c8high,outlow=sc8low,outhigh=sc8high);
+
+
+CSA32(
+alow=sc6low,ahigh=sc6high,
+blow=sc7low,bhigh=sc7high,
+clow=sc8low,chigh=sc8high,
+sumlow=s10low,sumhigh=s10high,
+carrylow=c10low,carryhigh=c10high);
+
+
+ShiftLeft32(inlow=c9low,inhigh=c9high,outlow=sc9low,outhigh=sc9high);
+ShiftLeft32(inlow=c10low,inhigh=c10high,outlow=sc10low,outhigh=sc10high);
+
+
+CSA32(
+alow=s9low,ahigh=s9high,
+blow=s10low,bhigh=s10high,
+clow=sc4low,chigh=sc4high,
+sumlow=s11low,sumhigh=s11high,
+carrylow=c11low,carryhigh=c11high);
+
+CSA32(
+alow=sc9low,ahigh=sc9high,
+blow=sc10low,bhigh=sc10high,
+clow=sc5low,chigh=sc5high,
+sumlow=s12low,sumhigh=s12high,
+carrylow=c12low,carryhigh=c12high);
+
+
+ShiftLeft32(inlow=c11low,inhigh=c11high,outlow=sc11low,outhigh=sc11high);
+ShiftLeft32(inlow=c12low,inhigh=c12high,outlow=sc12low,outhigh=sc12high);
+
+CSA32(
+alow=s11low,ahigh=s11high,
+blow=s12low,bhigh=s12high,
+clow=sc11low,chigh=sc11high,
+sumlow=s13low,sumhigh=s13high,
+carrylow=c13low,carryhigh=c13high);
+
+ShiftLeft32(inlow=c13low,inhigh=c13high,outlow=sc13low,outhigh=sc13high);
+
+CSA32(
+alow=s13low,ahigh=s13high,
+blow=sc12low,bhigh=sc12high,
+clow=sc13low,chigh=sc13high,
+sumlow=s14low,sumhigh=s14high,
+carrylow=c14low,carryhigh=c14high);
+
+
+ShiftLeft32(inlow=c14low,inhigh=c14high,outlow=sc14low,outhigh=sc14high);
+
+
+Add32(
+alow=s14low,ahigh=s14high,
+blow=sc14low,bhigh=sc14high,
+outlow=outlow,outhigh=outhigh);
+
+}

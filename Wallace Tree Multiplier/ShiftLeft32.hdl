@@ -1,0 +1,45 @@
+CHIP ShiftLeft32 {
+IN inlow[16], inhigh[16];
+OUT outlow[16], outhigh[16];
+
+PARTS:
+
+// ---- LOW HALF ----
+Or(a=false, b=false, out=outlow[0]);
+
+Or(a=inlow[0], b=false, out=outlow[1]);
+Or(a=inlow[1], b=false, out=outlow[2]);
+Or(a=inlow[2], b=false, out=outlow[3]);
+Or(a=inlow[3], b=false, out=outlow[4]);
+Or(a=inlow[4], b=false, out=outlow[5]);
+Or(a=inlow[5], b=false, out=outlow[6]);
+Or(a=inlow[6], b=false, out=outlow[7]);
+Or(a=inlow[7], b=false, out=outlow[8]);
+Or(a=inlow[8], b=false, out=outlow[9]);
+Or(a=inlow[9], b=false, out=outlow[10]);
+Or(a=inlow[10], b=false, out=outlow[11]);
+Or(a=inlow[11], b=false, out=outlow[12]);
+Or(a=inlow[12], b=false, out=outlow[13]);
+Or(a=inlow[13], b=false, out=outlow[14]);
+Or(a=inlow[14], b=false, out=outlow[15]);
+
+// ---- HIGH HALF ----
+Or(a=inlow[15], b=false, out=outhigh[0]);
+
+Or(a=inhigh[0], b=false, out=outhigh[1]);
+Or(a=inhigh[1], b=false, out=outhigh[2]);
+Or(a=inhigh[2], b=false, out=outhigh[3]);
+Or(a=inhigh[3], b=false, out=outhigh[4]);
+Or(a=inhigh[4], b=false, out=outhigh[5]);
+Or(a=inhigh[5], b=false, out=outhigh[6]);
+Or(a=inhigh[6], b=false, out=outhigh[7]);
+Or(a=inhigh[7], b=false, out=outhigh[8]);
+Or(a=inhigh[8], b=false, out=outhigh[9]);
+Or(a=inhigh[9], b=false, out=outhigh[10]);
+Or(a=inhigh[10], b=false, out=outhigh[11]);
+Or(a=inhigh[11], b=false, out=outhigh[12]);
+Or(a=inhigh[12], b=false, out=outhigh[13]);
+Or(a=inhigh[13], b=false, out=outhigh[14]);
+Or(a=inhigh[14], b=false, out=outhigh[15]);
+
+}
